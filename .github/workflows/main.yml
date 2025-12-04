@@ -1,0 +1,66 @@
+# Creating conceptual flow diagram for Prompt-Architect Lab
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+# Set up the figure
+plt.figure(figsize=(12, 10))
+ax = plt.gca()
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 12)
+plt.axis('off')
+
+# Central Core
+core = patches.Circle((5, 7), 1, edgecolor='black', facecolor='#f0f0f0')
+ax.add_patch(core)
+plt.text(5, 7, 'Real-Time\nDisplay\n(Core)', ha='center', va='center', fontsize=10, weight='bold')
+
+# Rotating Dashboards
+dashboard_labels = [
+    ('UI Dashboard', 5, 10),
+    ('Security Dashboard', 8, 8.5),
+    ('Collaboration Dashboard', 8, 5.5),
+    ('Strategic & Ethical\nDashboard', 2, 5.5),
+    ('Adaptive Results\nDashboard', 2, 8.5)
+]
+
+for label, x, y in dashboard_labels:
+    box = patches.FancyBboxPatch((x-1.5, y-0.5), 3, 1.2, boxstyle="round,pad=0.1", edgecolor='black', facecolor='#d0e1f9')
+    ax.add_patch(box)
+    plt.text(x, y, label, ha='center', va='center', fontsize=9)
+
+# Arrows from dashboards to core
+arrow_coords = [
+    ((5, 9.5), (5, 8)),  # UI
+    ((6.5, 8.5), (5.7, 7.5)),  # Security
+    ((6.5, 5.5), (5.7, 6.5)),  # Collaboration
+    ((3.5, 5.5), (4.3, 6.5)),  # Strategic
+    ((3.5, 8.5), (4.3, 7.5))   # Adaptive
+]
+
+for start, end in arrow_coords:
+    ax.annotate('', xy=end, xytext=start, arrowprops=dict(arrowstyle='->', lw=1.5))
+
+# Prompt Library at the bottom
+library_box = patches.FancyBboxPatch((2.5, 1), 5, 1.5, boxstyle="round,pad=0.1", edgecolor='black', facecolor='#f9e0d0')
+ax.add_patch(library_box)
+plt.text(5, 1.75, 'Prompt Library\n(Pre-structured Prompts + Auto-Suggest)', ha='center', va='center', fontsize=10)
+
+# Arrows from Prompt Library to Dashboards
+library_to_dashboards = [
+    ((5, 2.5), (5, 5.5)),  # to Collaboration
+    ((5, 2.5), (5, 6.9)),  # to Core
+    ((5, 2.5), (5, 9.5)),  # to UI
+]
+
+for start, end in library_to_dashboards:
+    ax.annotate('', xy=end, xytext=start, arrowprops=dict(arrowstyle='->', lw=1.5, linestyle='dashed'))
+
+# Arrow from Core to User
+ax.annotate('User Output\n(Preview)', xy=(5, 11.5), ha='center', fontsize=10)
+ax.annotate('', xy=(5, 10.5), xytext=(5, 8), arrowprops=dict(arrowstyle='->', lw=1.5, color='green'))
+
+# Save the diagram
+output_path = "/mnt/data/prompt_architect_lab_diagram.png"
+plt.savefig(output_path, bbox_inches='tight')
+print("Conceptual flow diagram for Prompt-Architect Lab saved as prompt_architect_lab_diagram.png")
